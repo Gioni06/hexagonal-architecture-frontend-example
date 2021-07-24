@@ -1,4 +1,4 @@
-import User from '../domain/User/User.js'
+import User from "../domain/User/User.js";
 
 export default class UserApplicationService {
   constructor(repository) {
