@@ -25,7 +25,7 @@ export default class UserApplicationService {
       const all = await this.repository.all();
       const users = all;
       return users.map((u) => {
-        return new User(u.name, u.email);
+        return new User(u.name, u.email, u.id);
       });
     } catch (e) {
       console.error(e);
