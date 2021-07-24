@@ -28,7 +28,7 @@ export default class UserApplicationService {
               return new User(u.name, u.email)
           })
         } catch(e) {
-            console.error(e)
+          console.error(e)
           return []
         }
     }
