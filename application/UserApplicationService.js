@@ -1,34 +1,34 @@
-import User from '../../domain/User.js'
+import User from '../domain/User/User.js'
 
 export default class UserApplicationService {
     constructor(repository) {
       this.repository = repository
     }
 
-    newUser(name, email) {
-        return new User(name, email)
+    newUser(...values) {
+        return new User(...values)
     }
     
-    save(user) {
-      this.all().forEach(u => {
+    async save(user) {
+      const res = await this.all()
+      res.forEach(u => {
           if(user.equals(u)) {
               throw new Error("user already exists")
           }
       });
-      this.repository.create(user.serialize())
+      await this.repository.create(user.serialize())
       return user
     }
     
-    all() {
+    async all() {
         try {
-          const all = this.repository.all()
-          console.log(all)
+          const all = await this.repository.all()
           const users = all
           return users.map((u) => {
               return new User(u.name, u.email)
           })
         } catch(e) {
-            console.log(e)
+            console.error(e)
           return []
         }
     }

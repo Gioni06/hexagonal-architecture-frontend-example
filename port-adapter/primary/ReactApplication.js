@@ -9,18 +9,20 @@ const App = (props) => {
   const emailRef = React.useRef()
   
   React.useEffect(() => {
-      const usrs = svc.all()
-      setUsers(usrs)
+      (async () => {
+        const usrs = await svc.all()
+        setUsers(usrs)
+      })()
   }, [])
 
-  function saveUser(e) {
+  async function saveUser(e) {
       e.preventDefault()
       setError()
       const name = nameRef.current.value
       const email = emailRef.current.value
       try {
         const user = svc.newUser(name, email)
-        svc.save(user)
+        await svc.save(user)
         setUsers((prev) => {
             return [...prev, user]
         })
