@@ -9,14 +9,14 @@ export function VueApplication(svc) {
           }
         },
         methods: {
-            saveUser: function(e) {
+            saveUser: async function(e) {
                 e.preventDefault()
                 this.error = null
                 const name = this.name
                 const email = this.email
                 try {
                     const user = svc.newUser(name, email)
-                    svc.save(user)
+                    await svc.save(user)
                     this.users.push(user)
                 } catch(e) {
                     this.error = e
@@ -26,8 +26,8 @@ export function VueApplication(svc) {
                 }
             }
         },
-        created: function() {
-            this.users = svc.all()
+        created: async function() {
+            this.users = await svc.all()
         },
         template: `
             <div class="container mx-auto px-4 max-w-xl">

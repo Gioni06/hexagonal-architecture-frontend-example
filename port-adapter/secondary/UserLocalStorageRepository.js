@@ -12,20 +12,20 @@ export default class UserLocalStorageRepository {
       }
     }
     
-    create(user) {
+    async create(user) {
       const current = JSON.parse(this.store.getItem(this.storageKey))
       current.push(user)
       this.store.setItem(this.storageKey, JSON.stringify(current))
     }
     
-    read(id) {
+    async read(id) {
       const current = JSON.parse(this.store.getItem(this.storageKey))
       return current.find((u) => {
           return u._id === id
       })
     }
   
-    all() {
+    async all() {
         return JSON.parse(this.store.getItem(this.storageKey))
     }
   }
