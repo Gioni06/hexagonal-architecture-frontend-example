@@ -5,8 +5,8 @@ export default class UserApplicationService {
       this.repository = repository
     }
 
-    newUser(name, email) {
-        return new User(name, email)
+    newUser(name, email, id) {
+        return new User(name, email, id)
     }
     
     save(user) {
@@ -22,10 +22,9 @@ export default class UserApplicationService {
     all() {
         try {
           const all = this.repository.all()
-          console.log(all)
           const users = all
           return users.map((u) => {
-              return new User(u.name, u.email)
+              return new User(u.name, u.email, u.id)
           })
         } catch(e) {
             console.log(e)
