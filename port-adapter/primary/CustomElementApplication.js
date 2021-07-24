@@ -18,17 +18,20 @@ export function CustomElementApplication(svc) {
         connectedCallback() {
             super.connectedCallback()
             this.users = svc.all()
+                .then(users => this.users = users)
+                .catch(e => this.error = e)
         }
 
-        saveUser(e) {
+        async saveUser(e) {
             e.preventDefault()
             this.error = undefined
             const name = document.querySelector('#name').value
             const email = document.querySelector('#email').value
             try {
                 const user = svc.newUser(name, email)
-                svc.save(user)
+                await svc.save(user)
                 this.users.push(user)
+                this.requestUpdate()
             } catch(e) {
                 this.error = e
                 window.setTimeout(() => {
