@@ -1,35 +1,35 @@
 export function VueApplication(svc) {
-    Vue.component('vue-app', {
-        data: function () {
-          return {
-            users: [],
-            name: "",
-            email: "",
-            error: null,
-          }
-        },
-        methods: {
-            saveUser: async function(e) {
-                e.preventDefault()
-                this.error = null
-                const name = this.name
-                const email = this.email
-                try {
-                    const user = svc.newUser(name, email)
-                    await svc.save(user)
-                    this.users.push(user)
-                } catch(e) {
-                    this.error = e
-                    window.setTimeout(() => {
-                        this.error = null
-                    }, 3000)
-                }
-            }
-        },
-        created: async function() {
-            this.users = await svc.all()
-        },
-        template: `
+  Vue.component("vue-app", {
+    data: function () {
+      return {
+        users: [],
+        name: "",
+        email: "",
+        error: null,
+      };
+    },
+    methods: {
+      saveUser: async function (e) {
+        e.preventDefault();
+        this.error = null;
+        const name = this.name;
+        const email = this.email;
+        try {
+          const user = svc.newUser(name, email);
+          await svc.save(user);
+          this.users.push(user);
+        } catch (e) {
+          this.error = e;
+          window.setTimeout(() => {
+            this.error = null;
+          }, 3000);
+        }
+      },
+    },
+    created: async function () {
+      this.users = await svc.all();
+    },
+    template: `
             <div class="container mx-auto px-4 max-w-xl">
                 <form class="mb-4">
                     <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name</label>
@@ -63,8 +63,8 @@ export function VueApplication(svc) {
                     </tbody>
                 </table>
             </div>
-        `
-    })
-    
-    new Vue({ el: '#react-root', template: '<vue-app></vue-app>' })
+        `,
+  });
+
+  new Vue({ el: "#react-root", template: "<vue-app></vue-app>" });
 }
