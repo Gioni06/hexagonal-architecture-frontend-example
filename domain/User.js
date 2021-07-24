@@ -7,7 +7,7 @@ function validateEmail(email) {
   }
 
 export default class User {
-    static validate(name, email) {
+    static validate(name, email, id) {
       if(typeof name != "string" || name === "") {
         throw new Error("invariant error")
       }
@@ -17,13 +17,16 @@ export default class User {
       if(!validateEmail(email)) {
         throw new Error("invalid email error")
       }
+      if(id && !uuid.validate(id)) {
+        throw new Error("invalid uuid error")
+      }
     }
 
-    constructor(name, email) {
-      User.validate(name, email)
+    constructor(name, email, id) {
+      User.validate(name, email, id)
       this._name = name
       this._email = email
-      this._id = uuid.v4()
+      this._id = id || uuid.v4()
       this._emailDomain = this._email.split("@")[1]
       this._emailUsername = this._email.split("@")[0].split("+")[0]
       this._emailSuffix = this._email.split("@")[0].split("+")[1]
